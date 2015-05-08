@@ -11,27 +11,31 @@ from playlist.models import ListItems
 
 USERNAME = 'jMRc2JevmY2NQVs52tkjBA'
 API_KEY = 'AIzaSyBwFsgFajTqkpBzETIBijui5D1AHzfsBb8'
-CHANNEL_ID = 'UCjMRc2JevmY2NQVs52tkjBA'
+# CHANNEL_ID = 'UCjMRc2JevmY2NQVs52tkjBA'
+CHANNEL_ID = 'UC_x5XG1OV2P6uZZ5FSM9Ttw'
+
 
 def cfevideos(request):
-        play_lists = get_videos()
-        url='https://www.googleapis.com/youtube/v3/playlists?key=%s&channelId=%s&part=snippet%%2CcontentDetails&maxResults=50' % (API_KEY, CHANNEL_ID)
+    play_lists = get_videos()
+    # url='https://www.googleapis.com/youtube/v3/playlists?key=%s&channelId=%s&part=snippet%%2CcontentDetails&maxResults=50' % (API_KEY, CHANNEL_ID)
+    url='https://www.googleapis.com/youtube/v3/playlists?key=%s&channelId=%s&part=snippet%%2CcontentDetails' % (API_KEY, CHANNEL_ID)    
    
-        res = urllib2.urlopen(url).read()
+    res = urllib2.urlopen(url).read()
 
-        data = json.loads(res)
-        for i in data['items']:
-            list_id=i['id']
+    data = json.loads(res)
+    for i in data['items']:
+        list_id=i['id']
 
-            new_id,created=ListItems.objects.get_or_create(list_id=list_id)
-            if created:
-                print "done!"
+        new_id,created=ListItems.objects.get_or_create(list_id=list_id)
+        if created:
+            print "done!"
   
-	return render_to_response('playlist.html',locals(),context_instance=RequestContext(request))
+    return render_to_response('playlist.html',locals(),context_instance=RequestContext(request))
 
 def get_videos():
-    url='https://www.googleapis.com/youtube/v3/playlists?key=%s&channelId=%s&part=snippet%%2CcontentDetails&maxResults=50' % (API_KEY, CHANNEL_ID)
-   
+    # url='https://www.googleapis.com/youtube/v3/playlists?key=%s&channelId=%s&part=snippet%%2CcontentDetails&maxResults=50' % (API_KEY, CHANNEL_ID)
+    # url='https://www.googleapis.com/youtube/v3/playlists?key=AIzaSyBwFsgFajTqkpBzETIBijui5D1AHzfsBb8&part=id%2Csnippet&id=SP736C3116AD309B58'
+    url='https://www.googleapis.com/youtube/v3/playlists?key=%s&channelId=%s&part=snippet%%2CcontentDetails' % (API_KEY, CHANNEL_ID)     
     res = urllib2.urlopen(url).read()
 
     play_lists = []
